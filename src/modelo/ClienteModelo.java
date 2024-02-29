@@ -26,12 +26,14 @@ public class ClienteModelo {
     private final int puerto = 55555;
     private final String host = "localhost";
     private String mensaje = "";
+    private String nombreCliente;
     
     
     public ClienteModelo () throws IOException {
         socketServidor = new Socket(host,puerto);
         entrada = new DataInputStream(socketServidor.getInputStream());
         salida = new DataOutputStream(socketServidor.getOutputStream()); 
+        setNombre(nombreCliente);
     }
     
     
@@ -43,6 +45,8 @@ public class ClienteModelo {
         while(true){
             
             String mensajeActual = getMensaje();
+            
+            System.out.println(recibirMensaje());
 
             
             if(!mensajeActual.equals(ultimoMensaje)){
@@ -81,6 +85,11 @@ public class ClienteModelo {
 
     public void cerrarConexion() throws IOException {
         socketServidor.close();
+    }
+    
+    
+    public void setNombre(String nombre){
+        this.nombreCliente = nombre;
     }
     
     

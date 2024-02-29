@@ -5,17 +5,12 @@
 package modelo;
 
 import controlador.ClienteHandler;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-/*
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-*/
+
 
 
 /**
@@ -28,16 +23,16 @@ public class ServidorModelo {
     private final int puerto = 55555;
     private ServerSocket servidorSocket;
     private Socket clienteSocket;
-  /*  private DataInputStream entrada;
-    private DataOutputStream salida;
-    private ArrayList<DataOutputStream> flujoSalida;
-*/
     
+    
+    private DataOutputStream salida;
+      
     
     // Metodo constructor
     
     public ServidorModelo () throws IOException{
         servidorSocket = new ServerSocket(puerto);
+        salida = new DataOutputStream(clienteSocket.getOutputStream());
     }
     
     // Metodo para iniciar el servidor y estar a la espera de clientes    
@@ -45,14 +40,24 @@ public class ServidorModelo {
         
         while(true){
             clienteSocket = servidorSocket.accept();
+            System.out.println("Un cliente se ha conectado.");
+            //Creamos un nuevo hilo por cada cliente para que sean independiente su conexion con el servidor
+            //Thread hiloCliente = new Thread(new ClienteHandler(clienteSocket, clientes));
+            Thread hiloCliente = new Thread(new ClienteHandler(clienteSocket));
+            hiloCliente.start();
             
+            salida.writeUTF("Probando");
             
-            Thread thread = new Thread(new ClienteHandler(clienteSocket));
-            thread.start();
             
         }
 
     }
+    
+    
+
+    
+    
+    
 
 
     

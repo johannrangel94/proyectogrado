@@ -32,6 +32,7 @@ public class ClienteVista extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        nombreCliente = new javax.swing.JOptionPane();
         txtCampo = new javax.swing.JTextField();
         btnEnviar = new javax.swing.JButton();
         scrollpane = new javax.swing.JScrollPane();
@@ -41,6 +42,7 @@ public class ClienteVista extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel1.add(nombreCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 120, -1, -1));
         jPanel1.add(txtCampo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, 280, -1));
 
         btnEnviar.setText("Enviar");
@@ -137,6 +139,7 @@ public class ClienteVista extends javax.swing.JFrame {
     public javax.swing.JButton btnEnviar;
     public javax.swing.JButton btnEnviar2;
     private javax.swing.JPanel jPanel1;
+    public javax.swing.JOptionPane nombreCliente;
     private javax.swing.JScrollPane scrollpane;
     public javax.swing.JTextArea txtArea;
     public javax.swing.JTextField txtCampo;

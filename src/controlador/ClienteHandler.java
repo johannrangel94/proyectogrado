@@ -8,6 +8,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
 
 /**
  *
@@ -18,11 +19,14 @@ public class ClienteHandler implements Runnable {
     private Socket clienteSocket;
     private DataInputStream entrada;
     private DataOutputStream salida;
+    private ArrayList<ClienteHandler> listaClientes = new ArrayList<>();
+    private String nombre;
 
     public ClienteHandler(Socket clienteSocket) throws IOException {
         this.clienteSocket = clienteSocket;
         entrada = new DataInputStream(clienteSocket.getInputStream());
         salida = new DataOutputStream(clienteSocket.getOutputStream());
+        listaClientes.add(this);
     }
 
     @Override
@@ -42,4 +46,24 @@ public class ClienteHandler implements Runnable {
             }
         }
     }
+    
+    
+    public void enviarMensaje(String mensaje){
+        for(ClienteHandler clientes : listaClientes) {
+            try {
+                if(!clientes.nombre.equals(nombre)){
+                    salida.writeUTF(mensaje);
+                    salida.flush();                    
+                }
+            } catch (IOException e) {
+                System.out.println(e);
+
+            }
+        }
+    }
+    
+
 }
+
+
+
